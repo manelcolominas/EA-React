@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import UserManagement from './components/users/UserManagement';
 import OrganizationManagement from './components/organizations/OrganizationManagement';
+import RecordManagement from './components/records/RecordManagement';
 
 function App() {
-  const [view, setView] = useState<'users' | 'organizations'>('users');
+  const [view, setView] = useState<'users' | 'organizations' | 'records'>('users');
 
   return (
     <div className="container mt-4">
@@ -26,10 +27,19 @@ function App() {
             Organizations
           </button>
         </li>
+        <li className="nav-item">
+          <button
+            className={`nav-link ${view === 'records' ? 'active' : ''}`}
+            onClick={() => setView('records')}
+          >
+            Records
+          </button>
+        </li>
       </ul>
 
       {view === 'users' && <UserManagement />}
       {view === 'organizations' && <OrganizationManagement />}
+      {view === 'records' && <RecordManagement />}
     </div>
   );
 }

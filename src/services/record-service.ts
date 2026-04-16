@@ -1,3 +1,3 @@
 import create from "./http-service";
 
-export default create('/users');
+export default create('/records');

@@ -8,15 +8,15 @@ interface Props {
 }
 
 /**
- * UserList component - Displays a list of users
+ * RecordList component - Displays a list of users
  * Handles only rendering, logic is managed by parent component
  */
 const UserList = ({ users, onEdit, onDelete }: Props) => {
-  const getOrganizationName = (organizacion: User['organizacion']) => {
-    if (typeof organizacion === 'object' && organizacion !== null) {
-      return organizacion.name;
+  const getOrganizationName = (organization: User['organization']) => {
+    if (typeof organization === 'object' && organization !== null) {
+      return organization.name;
     }
-    return organizacion; // Fallback to showing the ID string
+    return organization; // Fallback to showing the ID string
   };
 
   return (
@@ -32,7 +32,7 @@ const UserList = ({ users, onEdit, onDelete }: Props) => {
             <span>{user.email}</span>
             <span className="mx-2 text-muted">|</span>
             <span className="badge bg-info text-dark">
-              {getOrganizationName(user.organizacion)}
+              {getOrganizationName(user.organization)}
             </span>
           </div>
           <div>

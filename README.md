@@ -17,9 +17,9 @@ src/
 │   │   ├── button.module.css  # Button-specific styles
 │   │   └── Button.tsx         # Button component implementation
 │   ├── users/                 # User-related components
-│   │   ├── UserList.tsx       # Displays list of users
-│   │   ├── UserForm.tsx       # Form for creating/editing users
-│   │   └── UserManagement.tsx # Main user management component
+│   │   ├── RecordList.tsx       # Displays list of users
+│   │   ├── RecordForm.tsx       # Form for creating/editing users
+│   │   └── RecordManagement.tsx # Main user management component
 │   └── organizations/         # Organization-related components
 │       ├── OrganizationList.tsx       # Displays list of organizations
 │       ├── OrganizationForm.tsx       # Form for creating/editing organizations
@@ -99,7 +99,7 @@ npm run preview
 
 - **Separation of Concerns**: Hooks handle logic and state, services manage API calls, models define data structures, and components focus on UI rendering. This separation makes the codebase easier to maintain and test.
 - **Naming Conventions**:
-  - Components: PascalCase (e.g., `UserForm.tsx`)
+  - Components: PascalCase (e.g., `RecordForm.tsx`)
   - Hooks: camelCase prefixed with `use` (e.g., `useUser.ts`)
   - Services: kebab-case with descriptive names (e.g., `user-service.ts`)
   - Models: PascalCase matching the entity (e.g., `User.ts`)

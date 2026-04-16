@@ -33,7 +33,7 @@ interface Props {
  * RecordForm component - Displays a form for creating/editing users
  * Handles only form rendering and validation, logic is managed by parent component
  */
-const UserForm = ({ onSubmit, initialData, onCancel, organizations }: Props) => {
+const RecordForm = ({ onSubmit, initialData, onCancel, organizations }: Props) => {
   const {
     register,
     handleSubmit,
@@ -153,4 +153,4 @@ const UserForm = ({ onSubmit, initialData, onCancel, organizations }: Props) => 
   );
 };
 
-export default UserForm;
+export default RecordForm;

@@ -6,7 +6,7 @@ import UserForm, { UserFormData } from './UserForm';
 import Button from '../Button/Button';
 
 /**
- * UserManagement component - Main container for users CRUD operations
+ * RecordManagement component - Main container for users CRUD operations
  * Uses the useUser hook for all business logic
  * Handles state for form visibility and editing
  */
@@ -28,13 +28,16 @@ const UserManagement = () => {
         // Update existing user
         const updatedUser = { ...editingUser, ...apiPayload } as User;
         await updateUser(updatedUser);
-      } else {
+      }
+
+      else {
         // Create new user
         await createUser(apiPayload as Omit<User, '_id'>);
       }
       setShowForm(false);
       setEditingUser(null);
-    } catch {
+    }
+    catch {
       // Error is already handled by the hook
     }
   };

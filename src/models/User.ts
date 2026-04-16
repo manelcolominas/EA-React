@@ -5,6 +5,6 @@ export interface User {
   _id: string;
   name: string;
   email: string;
-  organizacion: Organization | string; // Reference to Organization, can be ID or full object
+  organization: Organization | string; // Reference to Organization, can be ID or full object
   password?: string; // Optional, used for creation/updates
 }
