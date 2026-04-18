@@ -4,13 +4,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Organization } from '../../models/Organization';
 import { useEffect } from 'react';
 import Button from '../Button/Button';
+import { User } from '../../models/User';
 
 const schema = z.object({
-  name: z
-    .string()
-    .min(3, { message: 'Name must be at least 3 characters.' }),
-  address: z.string().optional(),
-  description: z.string().optional(),
+  name: z.string().min(3, { message: 'Name must be at least 3 characters.' }),
+  users: z.array(z.string()).default([]),
 });
 
 export type OrganizationFormData = z.infer<typeof schema>;
@@ -19,26 +17,37 @@ interface Props {
   onSubmit: (data: OrganizationFormData) => void;
   initialData?: Organization;
   onCancel: () => void;
+  allUsers?: User[];
 }
 
 /**
  * OrganizationForm component - Displays a form for creating/editing organizations
- * Handles only form rendering and validation, logic is managed by parent component
+ * Handles form rendering, validation, and user selection
  */
-const OrganizationForm = ({ onSubmit, initialData, onCancel }: Props) => {
+const OrganizationForm = ({ onSubmit, initialData, onCancel, allUsers = [] }: Props) => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<OrganizationFormData>({ resolver: zodResolver(schema) });
+  } = useForm<OrganizationFormData>({ 
+    resolver: zodResolver(schema),
+    defaultValues: {
+      name: '',
+      users: []
+    }
+  });
 
   useEffect(() => {
     if (initialData) {
       reset({
         name: initialData.name,
-        address: initialData.address,
-        description: initialData.description,
+        users: initialData.users || [],
+      });
+    } else {
+      reset({
+        name: '',
+        users: []
       });
     }
   }, [initialData, reset]);
@@ -71,32 +80,26 @@ const OrganizationForm = ({ onSubmit, initialData, onCancel }: Props) => {
       </div>
 
       <div className="mb-3">
-        <label htmlFor="address" className="form-label">
-          Address
-        </label>
-        <input
-          {...register('address')}
-          id="address"
-          type="text"
-          className="form-control"
-        />
-        {errors.address && (
-          <p className="text-danger">{errors.address.message}</p>
-        )}
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="description" className="form-label">
-          Description
-        </label>
-        <textarea
-          {...register('description')}
-          id="description"
-          className="form-control"
-          rows={3}
-        />
-        {errors.description && (
-          <p className="text-danger">{errors.description.message}</p>
+        <label className="form-label">Users</label>
+        <div className="border rounded p-2 bg-white" style={{ maxHeight: '200px', overflowY: 'auto' }}>
+          {allUsers.length === 0 && <p className="text-muted m-0">No users available</p>}
+          {allUsers.map((user) => (
+            <div key={user._id} className="form-check">
+              <input
+                {...register('users')}
+                className="form-check-input"
+                type="checkbox"
+                value={user._id}
+                id={`user-${user._id}`}
+              />
+              <label className="form-check-label" htmlFor={`user-${user._id}`}>
+                {user.name} ({user.email})
+              </label>
+            </div>
+          ))}
+        </div>
+        {errors.users && (
+          <p className="text-danger">{errors.users.message}</p>
         )}
       </div>
 

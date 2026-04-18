@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useOrganization } from '../../hooks/useOrganization';
+import { useUser } from '../../hooks/useUser';
 import { Organization } from '../../models/Organization';
 import OrganizationList from './OrganizationList';
 import OrganizationForm, { OrganizationFormData } from './OrganizationForm';
@@ -11,7 +12,9 @@ import Button from '../Button/Button';
  * Handles state for form visibility and editing
  */
 const OrganizationManagement = () => {
-  const { organizations, loading, error, createOrganization, updateOrganization, deleteOrganization } = useOrganization();
+  const { organizations, loading: orgLoading, error: orgError, createOrganization, updateOrganization, deleteOrganization } = useOrganization();
+  const { users, loading: userLoading, error: userError } = useUser();
+  
   const [editingOrg, setEditingOrg] = useState<Organization | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -60,6 +63,9 @@ const OrganizationManagement = () => {
     org.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const error = orgError || userError;
+  const loading = orgLoading || userLoading;
+
   return (
     <div>
       <h2 className="mb-4">Organizations</h2>
@@ -92,6 +98,7 @@ const OrganizationManagement = () => {
           onSubmit={handleSave}
           initialData={editingOrg || undefined}
           onCancel={handleCancel}
+          allUsers={users}
         />
       )}
 
